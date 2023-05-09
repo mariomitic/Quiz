@@ -1,5 +1,3 @@
-/// PROBLEM - clik on button NEXT runs parts of function without fetching data first so click count is increased 
-/// migth need sinc fetch function instead
 
 
 //fetched data is iterated by index that will match clickCount
@@ -11,13 +9,14 @@ document.getElementById("previous").disabled = true;
 
 
 async function nextQuestion() {
-    clickCount = clickCount + 1;
-
+   
+console.log(clickCount)
     
    event.preventDefault();
     const response = await fetch('https://planinarske-akcije.com/quiz');
     const places = await response.json();
-    
+
+    clickCount = clickCount + 1;
     let currentQuestion = places[clickCount];
     document.getElementById("next").disabled = false;
 
