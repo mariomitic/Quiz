@@ -1,133 +1,128 @@
+//import { clickNext, clickPrevious } from '/clicking';
 
 
-//fetched data is iterated by index that will match clickCount
-let clickCount = -1;
-let correctAnswers = 0;
-let results = [' N ']
-document.getElementById("previous").disabled = true;
+var myVariables = {
+
+    clickCounter: clickCounter = -1,
+    answersArr: answersArr = [],
+    numberOfCorrectAnswers: numberOfCorrectAnswers = 0,
+
+}
 
 
-
-async function nextQuestion() {
-   
-console.log(clickCount)
+function clickNext(){
+    if(clickCounter === 3){return}
+    clickCounter++;
     
-   event.preventDefault();
-    const response = await fetch('https://planinarske-akcije.com/quiz');
-    const places = await response.json();
-
-    clickCount = clickCount + 1;
-    let currentQuestion = places[clickCount];
-    document.getElementById("next").disabled = false;
-
-    //Used for previous question evaluation
-    let previousQuestion = places[clickCount - 1]
-
-    if(clickCount === 10){
-        document.getElementById("next").disabled = true;
-        document.getElementById("result").disabled = false;
-
-        //after last question automaticaly shows results
-        showResults()//Last answer is evaluated here
-        var resultVisible = document.getElementById("result");
-        resultVisible.classList.remove("result");
-    return}
-
-  
-    //when passing to next question evaluates previous for correctness nad adds to correct answers
-    if(clickCount > 0){
-      for (let i=0; i<previousQuestion.options.length; i++){
-            if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`options${[i]}`).innerHTML === previousQuestion.mountainOnPicture) {
-                results.push(' C ');
-            }else if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`options${[i]}`).innerHTML !== previousQuestion.mountainOnPicture) {
-                results.push(' N ')
-            }
-        }
-    } 
-
-    document.getElementById("picture").src = currentQuestion.picture;
-    document.getElementById("options0").innerHTML = currentQuestion.options[0];
-    document.getElementById("options1").innerHTML = currentQuestion.options[1];
-    document.getElementById("options2").innerHTML = currentQuestion.options[2];
-
-   
-    if(clickCount === 0){
-        document.getElementById("previous").disabled = true;
-       }else{document.getElementById("previous").disabled = false;}
-  
+    return clickCounter
 }
 
-async function prevQuestion() {
-    clickCount = clickCount - 1;
-    event.preventDefault();
-    document.getElementById("result").disabled = true;
-    const response = await fetch('https://planinarske-akcije.com/quiz');
-    const places = await response.json();
+function clickPrevious(){
+    if(clickCounter === 0){return}
+    clickCounter--;
+ 
+    return clickCounter
+    }
 
-    let currentQuestion = places[clickCount];
-    results.pop();
+async function getData() {
+    const response = await fetch('https://planinarske-akcije.com/quiz?quiz_id=1');
+    if (!response.ok) {
+    const message = `Doslo je do greske, pokusaj kasnije: error ${response.status}`;
+    throw new Error(message);
+      }
+    quizdata = await response.json();
+    
+     }
 
-    document.getElementById("next").disabled = false;
-    document.getElementById("picture").src = currentQuestion.picture;
-    document.getElementById("options0").innerHTML = currentQuestion.options[0];
-    document.getElementById("options1").innerHTML = currentQuestion.options[1];
-    document.getElementById("options2").innerHTML = currentQuestion.options[2];
+getData().catch(error => {
+    error.message;
+    document.getElementById("title").innerHTML = error.message;
+    document.getElementById("start").classList.add("startHidden");
+})
 
 
-    if(clickCount === 0){
-        document.getElementById("previous").disabled = true;
-        return}
-}
 function startQuiz() {
-    results = [' N '];
-    clickCount = -1;
-    correctAnswers = 0;
-    document.getElementById("title").innerHTML = "Koje je ovo mesto?";
+    answersArr = [];
+    clickCounter = -1;
     nextQuestion()
-    var startBtn = document.getElementById("start");
-    startBtn.classList.add("start");
-    var pictureVisible = document.getElementById("picture");
-    pictureVisible.classList.remove("picture");
-    var formVisible = document.getElementById("form");
-    formVisible.classList.remove("form");
- }
+    setInterval(nextQuestion, 2000)
+}
 
-async function showResults() {
-    const response = await fetch('https://planinarske-akcije.com/quiz');
-    const places = await response.json();
-    let previousQuestion = places[clickCount - 1]
+function nextQuestion(e) {
+    if (e && e.preventDefault) { e.preventDefault();}
+    clickNext()
+    if(clickCounter === 3){
+        showResults()
 
-    //calculates last answer
-    if(clickCount === 10){
-        for (let i=0; i<previousQuestion.options.length; i++){
-            if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`options${[i]}`).innerHTML === previousQuestion.mountainOnPicture) {
-                results.push(' C ');
-            }else if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`options${[i]}`).innerHTML !== previousQuestion.mountainOnPicture) {
-                results.push(' N ')
+    }else{
+    document.getElementById("title").innerHTML = quizdata.questions[clickCounter].question;
+    document.getElementById("start").classList.add("startHidden");
+    document.getElementById("quiz_picture").classList.remove("quiz_pictureHidden")
+    document.getElementById("quiz_picture").src = quizdata.questions[clickCounter].picture.picture_url;
+    document.getElementById("form").classList.remove("formHidden");
+    document.getElementById("answer0").innerHTML = quizdata.questions[clickCounter].first_option;
+    document.getElementById("answer1").innerHTML = quizdata.questions[clickCounter].second_option;
+    document.getElementById("answer2").innerHTML = quizdata.questions[clickCounter].third_option;
+    document.getElementById("previous").disabled = true;
+    evaluateAsnwers()
+}
+   if(clickCounter > 0){
+    document.getElementById("previous").disabled = false;
+   }
+}
+
+
+const previousQuestion = (e) =>{
+    if (e && e.preventDefault) { e.preventDefault();}
+   clickPrevious()
+   goOneQuestionBack()
+   if(clickCounter === -1){return}
+   document.getElementById("title").innerHTML = quizdata.questions[clickCounter].question;
+   document.getElementById("quiz_picture").src = quizdata.questions[clickCounter].picture.picture_url;
+   document.getElementById("answer0").innerHTML = quizdata.questions[clickCounter].first_option;
+   document.getElementById("answer1").innerHTML = quizdata.questions[clickCounter].second_option;
+   document.getElementById("answer2").innerHTML = quizdata.questions[clickCounter].third_option;
+   if(clickCounter < 1){
+    document.getElementById("previous").disabled = true;
+   }
+   document.getElementById("next").disabled = false;
+}
+
+function evaluateAsnwers() {
+    if(clickCounter < 1){return}
+    for (let i = 0; i<3; i++ ){
+    if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`answer${[i]}`).innerHTML === quizdata.questions[clickCounter-1].correct_answer){
+        answersArr.push("C")
+    }
+    if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`answer${[i]}`).innerHTML !== quizdata.questions[clickCounter-1].correct_answer){
+        answersArr.push("N")
             }
-        }
-    } 
-    for (let i=0; i<results.length; i++) {
-        if(results[i] === ' C '){
-            correctAnswers = correctAnswers + 1
+         }
+      }
+
+function countCorrectAnswers() {
+    for(let i=0; i<answersArr.length; i++){
+        if(answersArr[i] === "C"){
+            numberOfCorrectAnswers++
+             }
         }
     }
 
-document.getElementById("title").innerHTML = "Tacno ste odgovorili na " + correctAnswers + " pitanja!";
-var startBtn = document.getElementById("start");
-document.getElementById("start").innerHTML = 'Pokusaj ponovo';
-startBtn.classList.remove("start");
-var resultVisible = document.getElementById("result");
-        resultVisible.classList.add("result");
-var pictureVisible = document.getElementById("picture");
-pictureVisible.classList.add("picture");
-var formVisible = document.getElementById("form");
-formVisible.classList.add("form");
-}
+
+ function goOneQuestionBack() {
+    if(clickCounter === 0){answersArr = []}
+    else{answersArr.pop()}
+     }
+
+ const showResults = () => {
+    evaluateAsnwers()
+    countCorrectAnswers()
+    document.getElementById("quiz_picture").classList.add("quiz_pictureHidden")
+    document.getElementById("form").classList.add("formHidden");
+    document.getElementById("tryagain").classList.remove("tryagainHidden");
+    document.getElementById("title").innerHTML = `Tacno si ogovrio na ${numberOfCorrectAnswers} pitanja!`;
+ 
+    }
 
 
-document.getElementById('next').addEventListener('click', nextQuestion, false);
-document.getElementById('previous').addEventListener('click', prevQuestion, false);
-document.getElementById('start').addEventListener('click', startQuiz, false);
-document.getElementById('result').addEventListener('click', showResults, false);
-document.getElementById('quit').addEventListener('click', window.location.reload, false)
+    

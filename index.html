@@ -11,27 +11,25 @@
 <body>
   
     <h1 id="title" >Kratak kviz, klikni start</h1>
-    <Button id="start" >Start</Button>
+    <Button onclick="startQuiz()" id="start" >Start</Button>
     <br></br>
-    <img id="picture" class="picture" src="" height="200px" width="200px"></img>
+    <button id="tryagain" class="tryagainHidden" onclick="location.reload()">Pokusaj ponovo</button>
     
+    <br></br>
+    <img id="quiz_picture" class="quiz_pictureHidden" src="" height="500px" width="500px"></img>
+    
+<form id="form" class="formHidden">
+  <div>
+  <p><input id="radio0" name="option" type="radio"><a id="answer0">?A</a></p>
+  <p><input id="radio1" name="option" type="radio" checked><a id="answer1">?B</a></p>
+  <p><input id="radio2" name="option" type="radio"><a id="answer2">?C</a></p>
+  </div>
 
-
-<form id="form" class="form">
-  <div class="alignRadioBtn">
-  <p><input id="radio0" name="option" type="radio"><a id="options0">option1</a></p>
-  <p><input id="radio1" name="option" type="radio" checked><a id="options1">option2</a></p>
-  <p><input id="radio2" name="option" type="radio"><a id="options2">option3</a></p>
-</div>
-  <button id="previous" class="mutedBack">Prethodno</button> <button id='next' class="mutedNext">Sledece</button> <button id='quit' class="mutedQuit">Idi na pocetak</button>
+  <button id="previous" onclick="previousQuestion()">Prethodno</button>
+  <button id='next' onclick="nextQuestion(event)">Sledece</button>
+  <button id='quit' class="mutedQuit"  onclick="location.reload()">Idi na pocetak</button>
   <br></br>
-
- 
 </form>
-
-<!-- result button is optional -->
-<!-- <button id="result" class="result">Vidi rezultate</button> -->
-<h2 id="result"></h2>
 
 <br></br>
 
