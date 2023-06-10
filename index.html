@@ -10,7 +10,7 @@
 </head>
 <body>
   
-    <h1 id="title" >Kratak kviz, klikni start</h1>
+    <h1 id="title" >Kratak kviz, klikni start</h1> <h2 id="timer"></h2>
     <Button onclick="startQuiz()" id="start" >Start</Button>
     <br></br>
     <button id="tryagain" class="tryagainHidden" onclick="location.reload()">Pokusaj ponovo</button>
@@ -25,7 +25,6 @@
   <p><input id="radio2" name="option" type="radio"><a id="answer2">?C</a></p>
   </div>
 
-  <button id="previous" onclick="previousQuestion()">Prethodno</button>
   <button id='next' onclick="nextQuestion(event)">Sledece</button>
   <button id='quit' class="mutedQuit"  onclick="location.reload()">Idi na pocetak</button>
   <br></br>

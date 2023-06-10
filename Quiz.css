@@ -3,7 +3,7 @@ body {
     background-color: rgb(157, 237, 237);
     }
     
-    .quiz_pictureHidden, .formHidden, .tryagainHidden, .startHidden{
+    .quiz_pictureHidden, .formHidden, .tryagainHidden, .startHidden, .timerHidden{
         visibility: hidden;    
     }
     

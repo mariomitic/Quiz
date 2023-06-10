@@ -1,12 +1,10 @@
-//import { clickNext, clickPrevious } from '/clicking';
-
 
 var myVariables = {
 
     clickCounter: clickCounter = -1,
     answersArr: answersArr = [],
     numberOfCorrectAnswers: numberOfCorrectAnswers = 0,
-
+    timerCountdown: timerCountdown = 61
 }
 
 
@@ -25,14 +23,19 @@ function clickPrevious(){
     }
 
 async function getData() {
+  
     const response = await fetch('https://planinarske-akcije.com/quiz?quiz_id=1');
     if (!response.ok) {
     const message = `Doslo je do greske, pokusaj kasnije: error ${response.status}`;
     throw new Error(message);
       }
     quizdata = await response.json();
-    
+   
+    quizquestions = quizdata.quiz.questions;
      }
+ 
+
+ 
 
 getData().catch(error => {
     error.message;
@@ -41,60 +44,57 @@ getData().catch(error => {
 })
 
 
-function startQuiz() {
+function startQuiz(quizdata) {
     answersArr = [];
     clickCounter = -1;
-    nextQuestion()
-    setInterval(nextQuestion, 2000)
+    nextQuestion(quizdata)
+    setInterval(countDown, 1000)
+}
+
+function countDown() {
+    timerCountdown--;
+    document.getElementById("timer").innerHTML = timerCountdown;
+    if(timerCountdown === 1){
+        timerCountdown = 61;
+        nextQuestion()
+    }
+    if(clickCounter === 3){
+        document.getElementById("timer").classList.add("timerHidden")
+        return
+    }
 }
 
 function nextQuestion(e) {
     if (e && e.preventDefault) { e.preventDefault();}
+    timerCountdown = 61;
     clickNext()
     if(clickCounter === 3){
+        document.getElementById("timer").classList.add("timerHidden")
         showResults()
 
     }else{
-    document.getElementById("title").innerHTML = quizdata.questions[clickCounter].question;
+    document.getElementById("title").innerHTML = quizquestions[clickCounter].question;
+
     document.getElementById("start").classList.add("startHidden");
     document.getElementById("quiz_picture").classList.remove("quiz_pictureHidden")
-    document.getElementById("quiz_picture").src = quizdata.questions[clickCounter].picture.picture_url;
+    document.getElementById("quiz_picture").src = quizquestions[clickCounter].picture.picture_url;
     document.getElementById("form").classList.remove("formHidden");
-    document.getElementById("answer0").innerHTML = quizdata.questions[clickCounter].first_option;
-    document.getElementById("answer1").innerHTML = quizdata.questions[clickCounter].second_option;
-    document.getElementById("answer2").innerHTML = quizdata.questions[clickCounter].third_option;
-    document.getElementById("previous").disabled = true;
-    evaluateAsnwers()
+    document.getElementById("answer0").innerHTML = quizquestions[clickCounter].first_option;
+    document.getElementById("answer1").innerHTML = quizquestions[clickCounter].second_option;
+    document.getElementById("answer2").innerHTML = quizquestions[clickCounter].third_option;
+     evaluateAsnwers()
 }
-   if(clickCounter > 0){
-    document.getElementById("previous").disabled = false;
-   }
+   
 }
 
-
-const previousQuestion = (e) =>{
-    if (e && e.preventDefault) { e.preventDefault();}
-   clickPrevious()
-   goOneQuestionBack()
-   if(clickCounter === -1){return}
-   document.getElementById("title").innerHTML = quizdata.questions[clickCounter].question;
-   document.getElementById("quiz_picture").src = quizdata.questions[clickCounter].picture.picture_url;
-   document.getElementById("answer0").innerHTML = quizdata.questions[clickCounter].first_option;
-   document.getElementById("answer1").innerHTML = quizdata.questions[clickCounter].second_option;
-   document.getElementById("answer2").innerHTML = quizdata.questions[clickCounter].third_option;
-   if(clickCounter < 1){
-    document.getElementById("previous").disabled = true;
-   }
-   document.getElementById("next").disabled = false;
-}
 
 function evaluateAsnwers() {
     if(clickCounter < 1){return}
     for (let i = 0; i<3; i++ ){
-    if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`answer${[i]}`).innerHTML === quizdata.questions[clickCounter-1].correct_answer){
+    if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`answer${[i]}`).innerHTML === quizquestions[clickCounter-1].correct_answer){
         answersArr.push("C")
     }
-    if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`answer${[i]}`).innerHTML !== quizdata.questions[clickCounter-1].correct_answer){
+    if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`answer${[i]}`).innerHTML !== quizquestions[clickCounter-1].correct_answer){
         answersArr.push("N")
             }
          }
@@ -109,10 +109,6 @@ function countCorrectAnswers() {
     }
 
 
- function goOneQuestionBack() {
-    if(clickCounter === 0){answersArr = []}
-    else{answersArr.pop()}
-     }
 
  const showResults = () => {
     evaluateAsnwers()
