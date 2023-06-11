@@ -9,6 +9,7 @@ var myVariables = {
 
 
 function clickNext(){
+
     if(clickCounter === 3){return}
     clickCounter++;
     
