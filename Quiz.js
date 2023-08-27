@@ -5,7 +5,7 @@ var myVariables = {
     correctAnswers: 0,
    // numberOfCorrectAnswers: numberOfCorrectAnswers = 0,
     timerInterval: () => {setInterval(countDown, 1000)},
-    timerCountdown: timerCountdown = 6 //match stroke in scc (animation: dash 5s linear)
+    timerCountdown: timerCountdown = 31 //match stroke in scc (animation: dash 5s linear)
 }
 
 
@@ -71,7 +71,7 @@ function countDown() {
     correctAnswer = myVariables.quizData[clickCounter].correct_answer;
       timerCountdown--;
     document.getElementById("countDown").innerHTML = timerCountdown;
-    if(timerCountdown === 5){
+    if(timerCountdown === 30){
         document.getElementById("dash").classList.add("circle");
     }
     if(timerCountdown === 0){
@@ -92,18 +92,18 @@ function countDown() {
 
 function nextQuestion() {
   
-   timerCountdown = 6;
+   timerCountdown = 31;
    timerInterval = setInterval(countDown, 1000);
    document.getElementById("dash").classList.remove("stoppedAnimation");
    clickCounter++
    document.getElementById("nextButton").classList.add("nextButtonDisabled");
    getData();
   
-    document.getElementById("A").classList.add("btn");
+    document.getElementById("A").classList.add("answerBtn");
     document.getElementById("A").classList.remove("turnRedWrongAnswer", "turnGreenCorrectAnswer");
-    document.getElementById("B").classList.add("btn");
+    document.getElementById("B").classList.add("answerBtn");
     document.getElementById("B").classList.remove("turnRedWrongAnswer", "turnGreenCorrectAnswer");
-    document.getElementById("C").classList.add("btn");
+    document.getElementById("C").classList.add("answerBtn");
     document.getElementById("C").classList.remove("turnRedWrongAnswer", "turnGreenCorrectAnswer");
     document.getElementById("dash").classList.remove("timerHidden");
 
@@ -154,7 +154,7 @@ const useFetchedData = (fetchedData) => {
         document.getElementById("C").classList.add("turnPale");
         document.getElementById(`${elementsId}`).classList.remove("turnPale");
      document.getElementById(`${elementsId}`).classList.add("turnGreenCorrectAnswer");
-     //document.getElementById(`${elementsId}`).classList.remove("btn");
+     //document.getElementById(`${elementsId}`).classList.remove("answerBtn");
      myVariables.correctAnswers++;
      document.getElementById('correctAnswers').innerHTML = `Tacnih: ${myVariables.correctAnswers} odgovora!`;
      timerCountdown = 5;
@@ -178,7 +178,7 @@ const useFetchedData = (fetchedData) => {
      document.getElementById("C").classList.add("turnPale");
      document.getElementById(`${elementsId}`).classList.remove("turnPale");
      document.getElementById(`${elementsId}`).classList.add("turnRedWrongAnswer");
-     //document.getElementById(`${elementsId}`).classList.remove("btn");
+     //document.getElementById(`${elementsId}`).classList.remove("answerBtn");
      document.getElementById("nextButton").classList.remove("nextButtonDisabled");
 
      document.getElementById(`${correctAnswer}`).classList.remove("turnPale");

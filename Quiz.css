@@ -64,7 +64,7 @@ body {
    
 }
 
-.btn {
+.answerBtn {
     background: #fff;
     color: #222;
     font-weight: 500;
@@ -75,10 +75,10 @@ body {
     text-align: center;
     border-radius: 4px;
     cursor: pointer;
-    /* transition: 0.3s; */
+   
 }
 
-.btn:hover{
+.answerBtn:hover{
     background: #222;
     color: #fff;
 
@@ -86,28 +86,12 @@ body {
 
 .turnRedWrongAnswer {
     background: #ee4e4e;
-    /* color: #222;
-    font-weight: 500;
-    width: 30%;
-    border: 2px solid #222;
-    padding: 10px;
-    margin: 10px 0;
-    text-align: center;
-    border-radius: 4px; */
     pointer-events: none;
     
 }
 
 .turnGreenCorrectAnswer {
     background: #25ee89;
-    /* color: #222;
-    font-weight: 500;
-    width: 30%;
-    border: 2px solid #222;
-    padding: 10px;
-    margin: 10px 0;
-    text-align: center;
-    border-radius: 4px; */
     pointer-events: none;
   
 }
@@ -130,7 +114,7 @@ body {
     position: relative;
     top: -25px;
     left: 0px;
-    /* visibility: hidden; */
+
 }
 
 .nextButtonDisabled {
@@ -167,5 +151,55 @@ body {
     display: flex;
     
 }
+
+
+/* timer style */
+
+
+.timer {
+    position: relative;
+    top: 10px;
+    left: 100px;
+    display: flex;
+    height: 50px;
+}
+
+#countDown{
+    width: 40px;
+    
+    position: relative;
+    top: -170px;
+    left: -16px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    font-size:xx-large;
+    color: #001e4d;;
+}
+
+.timer, .circle, .svg {
+    fill: transparent;
+    stroke-width: 10px;
+    stroke: #001e4d;
+    transform: translate(3px, 3px);
+}
+
+.timer, .circle, .svg:nth-child(2) {
+    stroke: var(--clr);
+    stroke-dasharray: 440;
+    stroke-dashoffset: 298;
+    animation: dash 30s linear;
+}
+
+
+@keyframes dash {
+    from {stroke-dashoffset: 298;}
+    to {stroke-dashoffset: 440;}
+}
+
+.stoppedAnimation {
+animation: none;
+}
+
+
    
 
