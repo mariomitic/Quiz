@@ -5,36 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Quiz.css">
+    <link rel="stylesheet" href="countDown.css">
     <title>Kviz</title>
-   
+
+
 </head>
 <body>
-  
-    <h1 id="title" >Kratak kviz, klikni start</h1>
-    <Button id="start" >Start</Button>
-    <br></br>
-    <img id="picture" class="picture" src="" height="200px" width="200px"></img>
-    
-
-
-<form id="form" class="form">
-  <div class="alignBtn">
-  <p><input id="radio0" name="option" type="radio"><a id="options0">option1</a></p>
-  <p><input id="radio1" name="option" type="radio" checked><a id="options1">option2</a></p>
-  <p><input id="radio2" name="option" type="radio"><a id="options2">option3</a></p>
-</div>
-  <button id="previous" class="mutedBack">Prethodno</button> <button id='next' class="mutedNext">Sledece</button> <button id='quit' class="mutedQuit">Idi na pocetak</button>
-  <br></br>
-
+  <div id="border" class="border_start">
+    <h1 id="title" >Kratak kviz. Prepoznaj mesto na slici</h1>
+    <Button onclick="startQuiz()" id="start" >Start</Button>
  
-</form>
+    <br></br>
+    <img id="quiz_picture" class=" picture quiz_pictureHidden" src="" height="500px" width="500px"></img>
 
-<!-- result button is optional -->
-<!-- <button id="result" class="result">Vidi rezultate</button> -->
-<h2 id="result"></h2>
+    <div id="timer" class="timer timerHidden">
+      <div style="--clr:#6de056;">
+        <svg id="dash" overflow="visible">
+          <circle x="650px" y="600px" r="30px"></circle>
+          <circle x="650px" y="600px" r="30px" ></circle>
+        </svg>
+          <div id="countDown"></div>
+            <img id="checkSign" class="checkSign" src="img/green_check.png" height="150px" width="150px"></img>
+            <img id="xSign" class="xSign" src="img/red_x.png" height="100px" width="100px"></img>
+        </div>
+    </div>
 
-<br></br>
+
+  <div id="currentScore" class="currentScore currentScoreHidden">
+    <b></b><p id="questionCount">0 od 3 pitanja</p></b><p id="correctAnswers">Tacnih: 0 odgovora</p>
+  </div>
+
+  <div id="answerButtons" class="answerButtons answerButtonsHidden">
+  <button onclick="evaluateAsnwers(this.id)" id="A" class="btn">Option 1</button>
+  <button onclick="evaluateAsnwers(this.id)" id="B" class="btn">Option 2</button>
+  <button onclick="evaluateAsnwers(this.id)" id="C" class="btn">Option 3</button>
+  </div>
+
+  <button onclick="nextQuestion()" id="nextButton" class="nextButton nextButtonHidden nextButtonDisabled">Sledece Pitanje >>></button>
+
+
+</div>
 
 <script src="Quiz.js"></script>
+
 </body>
 </html>

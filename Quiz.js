@@ -1,134 +1,218 @@
-/// PROBLEM - clik on button NEXT runs parts of function without fetching data first so click count is increased 
-/// migth need sinc fetch function instead
 
-
-//fetched data is iterated by index that will match clickCount
-let clickCount = -1;
-let correctAnswers = 0;
-let results = [' N ']
-document.getElementById("previous").disabled = true;
-
-
-
-async function nextQuestion() {
-    clickCount = clickCount + 1;
-
-    
-   event.preventDefault();
-    const response = await fetch('https://planinarske-akcije.com/quiz');
-    const places = await response.json();
-    
-    let currentQuestion = places[clickCount];
-    document.getElementById("next").disabled = false;
-
-    //Used for previous question evaluation
-    let previousQuestion = places[clickCount - 1]
-
-    if(clickCount === 10){
-        document.getElementById("next").disabled = true;
-        document.getElementById("result").disabled = false;
-
-        //after last question automaticaly shows results
-        showResults()//Last answer is evaluated here
-        var resultVisible = document.getElementById("result");
-        resultVisible.classList.remove("result");
-    return}
-
-  
-    //when passing to next question evaluates previous for correctness nad adds to correct answers
-    if(clickCount > 0){
-      for (let i=0; i<previousQuestion.options.length; i++){
-            if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`options${[i]}`).innerHTML === previousQuestion.mountainOnPicture) {
-                results.push(' C ');
-            }else if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`options${[i]}`).innerHTML !== previousQuestion.mountainOnPicture) {
-                results.push(' N ')
-            }
-        }
-    } 
-
-    document.getElementById("picture").src = currentQuestion.picture;
-    document.getElementById("options0").innerHTML = currentQuestion.options[0];
-    document.getElementById("options1").innerHTML = currentQuestion.options[1];
-    document.getElementById("options2").innerHTML = currentQuestion.options[2];
-
-   
-    if(clickCount === 0){
-        document.getElementById("previous").disabled = true;
-       }else{document.getElementById("previous").disabled = false;}
-  
+var myVariables = {
+    quizData: {},
+    clickCounter: clickCounter = -1,
+    correctAnswers: 0,
+   // numberOfCorrectAnswers: numberOfCorrectAnswers = 0,
+    timerInterval: () => {setInterval(countDown, 1000)},
+    timerCountdown: timerCountdown = 6 //match stroke in scc (animation: dash 5s linear)
 }
 
-async function prevQuestion() {
-    clickCount = clickCount - 1;
-    event.preventDefault();
-    document.getElementById("result").disabled = true;
-    const response = await fetch('https://planinarske-akcije.com/quiz');
-    const places = await response.json();
 
-    let currentQuestion = places[clickCount];
-    results.pop();
-
-    document.getElementById("next").disabled = false;
-    document.getElementById("picture").src = currentQuestion.picture;
-    document.getElementById("options0").innerHTML = currentQuestion.options[0];
-    document.getElementById("options1").innerHTML = currentQuestion.options[1];
-    document.getElementById("options2").innerHTML = currentQuestion.options[2];
-
-
-    if(clickCount === 0){
-        document.getElementById("previous").disabled = true;
-        return}
-}
 function startQuiz() {
-    results = [' N '];
-    clickCount = -1;
-    correctAnswers = 0;
-    document.getElementById("title").innerHTML = "Koje je ovo mesto?";
-    nextQuestion()
-    var startBtn = document.getElementById("start");
-    startBtn.classList.add("start");
-    var pictureVisible = document.getElementById("picture");
-    pictureVisible.classList.remove("picture");
-    var formVisible = document.getElementById("form");
-    formVisible.classList.remove("form");
- }
+    myVariables.correctAnswers = 0;
+    document.getElementById('correctAnswers').innerHTML = `Tacnih: ${myVariables.correctAnswers} odgovora!`;
+    answersArr = [];
+    clickCounter = -1;
+    document.getElementById("border").classList.remove("border_start");
+    document.getElementById("border").classList.add("border");
+    document.getElementById("quiz_picture").classList.remove("quiz_pictureHidden");
+    document.getElementById("start").classList.add("startHidden");
+    document.getElementById("title").innerHTML = "Koje je ovo mesto?"
+    document.getElementById("timer").classList.remove("timerHidden");
+    document.getElementById("currentScore").classList.remove("currentScoreHidden");
+    document.getElementById("answerButtons").classList.remove("answerButtonsHidden");
+    document.getElementById("nextButton").classList.remove("nextButtonHidden");
+    document.getElementById("checkSign").classList.add("checkSignHidden");
+    document.getElementById("xSign").classList.add("xSignHidden");
+    
 
-async function showResults() {
-    const response = await fetch('https://planinarske-akcije.com/quiz');
-    const places = await response.json();
-    let previousQuestion = places[clickCount - 1]
+    timerInterval = setInterval(countDown, 1000);
+    clickCounter++
+    getData()
+    
+        
+}
 
-    //calculates last answer
-    if(clickCount === 10){
-        for (let i=0; i<previousQuestion.options.length; i++){
-            if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`options${[i]}`).innerHTML === previousQuestion.mountainOnPicture) {
-                results.push(' C ');
-            }else if(document.getElementById(`radio${[i]}`).checked == true && document.getElementById(`options${[i]}`).innerHTML !== previousQuestion.mountainOnPicture) {
-                results.push(' N ')
-            }
-        }
-    } 
-    for (let i=0; i<results.length; i++) {
-        if(results[i] === ' C '){
-            correctAnswers = correctAnswers + 1
-        }
+
+ const getData = async () => {
+    const settings = {
+        method: 'GET',
+        headers: {
+            'accept': 'application/json',
+             'X-API-KEY': 'zQLFkxoUcdRdzVEfdxAqdkmQPYVuEY',
+        },
+      }
+    const response = await fetch('https://planinarske-akcije.com/quiz/quiz?quiz_id=1', settings);
+    if (!response.ok) {
+    const message = `Doslo je do greske, pokusaj kasnije: error ${response.status}`;
+    throw new Error(message);
+      }
+      else{
+    quizdata = await response.json();
+    quizquestions = quizdata.quiz.questions;
+    myVariables.quizData = quizquestions;
+    useFetchedData(quizquestions)
+    //console.log(myVariables.quizData)
+      }
+     }
+
+
+getData().catch(error => {
+    error.message;
+    document.getElementById("title").innerHTML = error.message;
+    document.getElementById("start").classList.add("startHidden");
+})
+
+
+
+function countDown() {
+    //if(clickCounter > myVariables.quizData.length){return null}
+    correctAnswer = myVariables.quizData[clickCounter].correct_answer;
+      timerCountdown--;
+    document.getElementById("countDown").innerHTML = timerCountdown;
+    if(timerCountdown === 5){
+        document.getElementById("dash").classList.add("circle");
+    }
+    if(timerCountdown === 0){
+        clearInterval(timerInterval);
+        document.getElementById("countDown").classList.add("timerHidden");//hides timer countDown
+        document.getElementById("countDown").innerHTML = "";
+        document.getElementById("dash").classList.remove("circle");
+        document.getElementById("nextButton").classList.remove("nextButtonDisabled");
+        document.getElementById("A").classList.add("turnPale");
+        document.getElementById("B").classList.add("turnPale");
+        document.getElementById("C").classList.add("turnPale");
+        document.getElementById(`${correctAnswer}`).classList.remove("turnPale");
+        document.getElementById(`${correctAnswer}`).classList.add("turnGreenCorrectAnswer");
+        document.getElementById("xSign").classList.add("xSignHidden");
+    }
+}
+
+
+function nextQuestion() {
+  
+   timerCountdown = 6;
+   timerInterval = setInterval(countDown, 1000);
+   document.getElementById("dash").classList.remove("stoppedAnimation");
+   clickCounter++
+   document.getElementById("nextButton").classList.add("nextButtonDisabled");
+   getData();
+  
+    document.getElementById("A").classList.add("btn");
+    document.getElementById("A").classList.remove("turnRedWrongAnswer", "turnGreenCorrectAnswer");
+    document.getElementById("B").classList.add("btn");
+    document.getElementById("B").classList.remove("turnRedWrongAnswer", "turnGreenCorrectAnswer");
+    document.getElementById("C").classList.add("btn");
+    document.getElementById("C").classList.remove("turnRedWrongAnswer", "turnGreenCorrectAnswer");
+    document.getElementById("dash").classList.remove("timerHidden");
+
+    document.getElementById("A").classList.remove("turnPale");
+    document.getElementById("B").classList.remove("turnPale");
+    document.getElementById("C").classList.remove("turnPale");
+
+    document.getElementById("countDown").classList.remove("timerHidden");
+    document.getElementById("checkSign").classList.add("checkSignHidden");
+    document.getElementById("xSign").classList.add("xSignHidden");
+
+    //console.log(myVariables.quizData.length)
+
+    if(clickCounter === myVariables.quizData.length){
+        clearInterval(timerInterval);
+        showResults()
+    }
+    
+    
+}
+   
+
+
+
+const useFetchedData = (fetchedData) => {
+    if(clickCounter < 0 || clickCounter === fetchedData.length) {return}
+    else{
+    document.getElementById("quiz_picture").src = (fetchedData[clickCounter].picture.picture_url);
+    countAnswers(fetchedData)
+    document.getElementById("A").innerHTML = fetchedData[clickCounter].first_option;
+    document.getElementById("B").innerHTML = fetchedData[clickCounter].second_option;
+    document.getElementById("C").innerHTML = fetchedData[clickCounter].third_option;
+    //console.log(fetchedData[clickCounter])
+}
+    
+}
+
+
+
+ function evaluateAsnwers(elementsId) {
+
+    correctAnswer = myVariables.quizData[clickCounter].correct_answer;
+
+    //console.log(myVariables.quizData)
+    if (elementsId === correctAnswer){
+        document.getElementById("A").classList.add("turnPale");
+        document.getElementById("B").classList.add("turnPale");
+        document.getElementById("C").classList.add("turnPale");
+        document.getElementById(`${elementsId}`).classList.remove("turnPale");
+     document.getElementById(`${elementsId}`).classList.add("turnGreenCorrectAnswer");
+     //document.getElementById(`${elementsId}`).classList.remove("btn");
+     myVariables.correctAnswers++;
+     document.getElementById('correctAnswers').innerHTML = `Tacnih: ${myVariables.correctAnswers} odgovora!`;
+     timerCountdown = 5;
+     //document.getElementById("countDown").innerHTML = timerCountdown;
+     document.getElementById("dash").classList.add("stoppedAnimation");
+     clearInterval(timerInterval);
+     document.getElementById("nextButton").classList.remove("nextButtonDisabled");
+     //stroke is not stopped, it is independent of interval
+
+     document.getElementById("countDown").classList.add("timerHidden");//hides timer countDown
+     document.getElementById("countDown").innerHTML = "";
+     document.getElementById("dash").classList.remove("circle");
+     document.getElementById("checkSign").classList.remove("checkSignHidden");
+
+    }else{
+
+     clearInterval(timerInterval);
+
+     document.getElementById("A").classList.add("turnPale");
+     document.getElementById("B").classList.add("turnPale");
+     document.getElementById("C").classList.add("turnPale");
+     document.getElementById(`${elementsId}`).classList.remove("turnPale");
+     document.getElementById(`${elementsId}`).classList.add("turnRedWrongAnswer");
+     //document.getElementById(`${elementsId}`).classList.remove("btn");
+     document.getElementById("nextButton").classList.remove("nextButtonDisabled");
+
+     document.getElementById(`${correctAnswer}`).classList.remove("turnPale");
+     document.getElementById(`${correctAnswer}`).classList.add("turnGreenCorrectAnswer");
+
+     document.getElementById("countDown").classList.add("timerHidden");//hides timer countDown
+     document.getElementById("countDown").innerHTML = "";
+     document.getElementById("dash").classList.remove("circle");
+     document.getElementById("xSign").classList.remove("xSignHidden");
+    }
     }
 
-document.getElementById("title").innerHTML = "Tacno ste odgovorili na " + correctAnswers + " pitanja!";
-var startBtn = document.getElementById("start");
-document.getElementById("start").innerHTML = 'Pokusaj ponovo';
-startBtn.classList.remove("start");
-var resultVisible = document.getElementById("result");
-        resultVisible.classList.add("result");
-var pictureVisible = document.getElementById("picture");
-pictureVisible.classList.add("picture");
-var formVisible = document.getElementById("form");
-formVisible.classList.add("form");
-}
 
 
-document.getElementById('next').addEventListener('click', nextQuestion, false);
-document.getElementById('previous').addEventListener('click', prevQuestion, false);
-document.getElementById('start').addEventListener('click', startQuiz, false);
-document.getElementById('result').addEventListener('click', showResults, false);
-document.getElementById('quit').addEventListener('click', window.location.reload, false)
+function countAnswers(fetchedData) {
+        document.getElementById('questionCount').innerHTML = `${clickCounter + 1} od ${fetchedData.length} pitanja`;
+        
+    }
+
+
+
+  const showResults = () => {
+    document.getElementById("border").classList.add("border_start");
+    document.getElementById("border").classList.remove("border");
+    document.getElementById("quiz_picture").classList.add("quiz_pictureHidden");
+    document.getElementById("start").classList.remove("startHidden");
+    document.getElementById("title").innerHTML = `Tacno si ogovrio na ${myVariables.correctAnswers} pitanja!`;
+    document.getElementById("timer").classList.add("timerHidden");
+    document.getElementById("currentScore").classList.add("currentScoreHidden");
+    document.getElementById("answerButtons").classList.add("answerButtonsHidden");
+    document.getElementById("nextButton").classList.add("nextButtonHidden");
+    //document.getElementById("title").innerHTML = `Tacno si ogovrio na ${numberOfCorrectAnswers} pitanja!`;
+ 
+     }
+
+
+    

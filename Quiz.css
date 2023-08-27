@@ -1,19 +1,171 @@
-body {
-text-align: center;
-background-color: rgb(157, 237, 237);
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
 }
 
-.picture, .form, .result{
-    visibility: hidden;
+
+body {
+    text-align: center;
+    background: #5989d6;
+       }
+
+.border_start{
+
+    background: #fff;
+    width: 90%;
+    max-width: 600px;
+    max-height: 135px;
+    margin: 25px auto 0;
+    border-radius: 30px;
+    }
+
+.border{
+
+    background: #fff;
+    width: 90%;
+    max-width: 600px;
+    max-height: 1000px;
+    margin: 25px auto 0;
+    border-radius: 30px;
+}
+
+
+
+.picture {
+    position: relative;
+    top: -50px;
+    left: 0px;
+    border-radius: 15px;
+}
+
+.currentScore {
+    display: inline;
+    position: relative;
+    top: -50px;
+    left: 180px;
+}
+
+.answerButtons {
+    position: relative;
+    top: -20px;
+    left: 0px;
+}
+
+ 
+.quiz_pictureHidden, .formHidden, .tryagainHidden, .startHidden, .timerHidden, .currentScoreHidden, .answerButtonsHidden, 
+.nextButtonHidden, .checkSignHidden, .xSignHidden{
+        visibility: hidden;    
+    }
+
+#title{
+    padding-top: 15px;
+   
+}
+
+.btn {
+    background: #fff;
+    color: #222;
+    font-weight: 500;
+    width: 30%;
+    border: 2px solid #222;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    /* transition: 0.3s; */
+}
+
+.btn:hover{
+    background: #222;
+    color: #fff;
+
+}
+
+.turnRedWrongAnswer {
+    background: #ee4e4e;
+    /* color: #222;
+    font-weight: 500;
+    width: 30%;
+    border: 2px solid #222;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+    border-radius: 4px; */
+    pointer-events: none;
     
 }
 
-.start{
-    visibility: hidden;
-}
-
-
-.alignBtn{
+.turnGreenCorrectAnswer {
+    background: #25ee89;
+    /* color: #222;
+    font-weight: 500;
+    width: 30%;
+    border: 2px solid #222;
+    padding: 10px;
+    margin: 10px 0;
     text-align: center;
- 
+    border-radius: 4px; */
+    pointer-events: none;
+  
 }
+
+.turnPale {
+    background: #fff;
+    color: #b3b2b2;
+    font-weight: 500;
+    width: 30%;
+    border: 2px solid #b3b2b2;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+    border-radius: 4px;
+    pointer-events: none;
+  
+}
+
+.nextButton {
+    position: relative;
+    top: -25px;
+    left: 0px;
+    /* visibility: hidden; */
+}
+
+.nextButtonDisabled {
+    pointer-events: none;
+}
+   
+.nextButton, #start{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 150px;
+    padding: 10px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+
+}
+
+
+.checkSign {
+    position: relative;
+    top: -220px;
+    left: 120px;
+    display: flex;
+    
+}
+
+.xSign {
+    position: relative;
+    top: -340px;
+    left: 135px;
+    display: flex;
+    
+}
+   
+
