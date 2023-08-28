@@ -23,8 +23,14 @@ function startQuiz() {
     document.getElementById("currentScore").classList.remove("currentScoreHidden");
     document.getElementById("answerButtons").classList.remove("answerButtonsHidden");
     document.getElementById("nextButton").classList.remove("nextButtonHidden");
-    document.getElementById("checkSign").classList.add("checkSignHidden");
-    document.getElementById("xSign").classList.add("xSignHidden");
+    document.getElementById("checkSignA").classList.add("checkSignHidden");
+    document.getElementById("xSignA").classList.add("xSignHidden");
+
+    document.getElementById("checkSignB").classList.add("checkSignHidden");
+    document.getElementById("xSignB").classList.add("xSignHidden");
+
+    document.getElementById("checkSignC").classList.add("checkSignHidden");
+    document.getElementById("xSignC").classList.add("xSignHidden");
     
 
     timerInterval = setInterval(countDown, 1000);
@@ -74,9 +80,16 @@ function countDown() {
     if(timerCountdown === 30){
         document.getElementById("dash").classList.add("circle");
     }
+    if(timerCountdown === 20){
+        document.getElementById("timerStyle").style = "--clr:#e0de56;";
+    }
+    if(timerCountdown === 10){
+        document.getElementById("timerStyle").style = "--clr:#e05656;";
+    }
     if(timerCountdown === 0){
         clearInterval(timerInterval);
         document.getElementById("countDown").classList.add("timerHidden");//hides timer countDown
+        document.getElementById("timerStyle").style = "--clr:#6de056;";
         document.getElementById("countDown").innerHTML = "";
         document.getElementById("dash").classList.remove("circle");
         document.getElementById("nextButton").classList.remove("nextButtonDisabled");
@@ -85,7 +98,7 @@ function countDown() {
         document.getElementById("C").classList.add("turnPale");
         document.getElementById(`${correctAnswer}`).classList.remove("turnPale");
         document.getElementById(`${correctAnswer}`).classList.add("turnGreenCorrectAnswer");
-        document.getElementById("xSign").classList.add("xSignHidden");
+        document.getElementById("xSignA").classList.add("xSignHidden");
     }
 }
 
@@ -93,6 +106,7 @@ function countDown() {
 function nextQuestion() {
   
    timerCountdown = 31;
+   document.getElementById("timerStyle").style = "--clr:#6de056;";
    timerInterval = setInterval(countDown, 1000);
    document.getElementById("dash").classList.remove("stoppedAnimation");
    clickCounter++
@@ -112,8 +126,12 @@ function nextQuestion() {
     document.getElementById("C").classList.remove("turnPale");
 
     document.getElementById("countDown").classList.remove("timerHidden");
-    document.getElementById("checkSign").classList.add("checkSignHidden");
-    document.getElementById("xSign").classList.add("xSignHidden");
+    document.getElementById("checkSignA").classList.add("checkSignHidden");
+    document.getElementById("xSignA").classList.add("xSignHidden");
+    document.getElementById("checkSignB").classList.add("checkSignHidden");
+    document.getElementById("xSignB").classList.add("xSignHidden");
+    document.getElementById("checkSignC").classList.add("checkSignHidden");
+    document.getElementById("xSignC").classList.add("xSignHidden");
 
     //console.log(myVariables.quizData.length)
 
@@ -154,28 +172,27 @@ const useFetchedData = (fetchedData) => {
         document.getElementById("C").classList.add("turnPale");
         document.getElementById(`${elementsId}`).classList.remove("turnPale");
      document.getElementById(`${elementsId}`).classList.add("turnGreenCorrectAnswer");
-     //document.getElementById(`${elementsId}`).classList.remove("answerBtn");
      myVariables.correctAnswers++;
      document.getElementById('correctAnswers').innerHTML = `Tacnih: ${myVariables.correctAnswers} odgovora!`;
      timerCountdown = 5;
-     //document.getElementById("countDown").innerHTML = timerCountdown;
      document.getElementById("dash").classList.add("stoppedAnimation");
      clearInterval(timerInterval);
      document.getElementById("nextButton").classList.remove("nextButtonDisabled");
-     //stroke is not stopped, it is independent of interval
+     //stroke is independent of interval
 
      document.getElementById("countDown").classList.add("timerHidden");//hides timer countDown
      document.getElementById("countDown").innerHTML = "";
      document.getElementById("dash").classList.remove("circle");
-     document.getElementById("checkSign").classList.remove("checkSignHidden");
+
+     document.getElementById(`checkSign${elementsId}`).classList.remove("checkSignHidden");
 
     }else{
 
      clearInterval(timerInterval);
 
-     document.getElementById("A").classList.add("turnPale");
-     document.getElementById("B").classList.add("turnPale");
-     document.getElementById("C").classList.add("turnPale");
+     document.getElementById("A").classList.add("turnRedWrongAnswer");
+     document.getElementById("B").classList.add("turnRedWrongAnswer");
+     document.getElementById("C").classList.add("turnRedWrongAnswer");
      document.getElementById(`${elementsId}`).classList.remove("turnPale");
      document.getElementById(`${elementsId}`).classList.add("turnRedWrongAnswer");
      //document.getElementById(`${elementsId}`).classList.remove("answerBtn");
@@ -187,7 +204,7 @@ const useFetchedData = (fetchedData) => {
      document.getElementById("countDown").classList.add("timerHidden");//hides timer countDown
      document.getElementById("countDown").innerHTML = "";
      document.getElementById("dash").classList.remove("circle");
-     document.getElementById("xSign").classList.remove("xSignHidden");
+     document.getElementById(`xSign${elementsId}`).classList.remove("xSignHidden");
     }
     }
 

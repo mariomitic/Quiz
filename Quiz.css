@@ -43,7 +43,7 @@ body {
 .currentScore {
     display: inline;
     position: relative;
-    top: -50px;
+    top: -75px;
     left: 180px;
 }
 
@@ -136,22 +136,53 @@ body {
 }
 
 
-.checkSign {
+.checkSignA {
     position: relative;
-    top: -220px;
-    left: 120px;
+    top: -145px;
+    left: -18px;
     display: flex;
     
 }
 
-.xSign {
+.xSignA {
     position: relative;
-    top: -340px;
-    left: 135px;
+    top: -210px;
+    left: -15px;
     display: flex;
     
 }
 
+.checkSignB {
+    position: relative;
+    top: -270px;
+    left: 165px;
+    display: flex;
+    
+}
+
+.xSignB {
+    position: relative;
+    top: -335px;
+    left: 165px;
+    display: flex;
+    
+}
+
+.checkSignC {
+    position: relative;
+    top: -395px;
+    left: 350px;
+    display: flex;
+    
+}
+
+.xSignC {
+    position: relative;
+    top: -460px;
+    left: 355px;
+    display: flex;
+    
+}
 
 /* timer style */
 
@@ -200,6 +231,12 @@ body {
 animation: none;
 }
 
-
+.signature{
+    position: absolute;
+    left: 0px;
+    top: -3px;
+    font-style: italic;
+    color: #021d49;
+}
    
 

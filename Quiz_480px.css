@@ -1,4 +1,4 @@
-@media (max-width:480px) {
+@media (max-width:412x) {
 
 
     *{
@@ -19,14 +19,14 @@
         background: #fff;
         text-align: center;
         width: 90%;
-        max-width: 500px;
-        max-height: 170px;
+        max-width: 300px;
+        max-height: 200px;
         margin: 25px auto 0;
         border-radius: 30px;
         }
     
     .border{
-    
+        text-align: center;
         background: #fff;
         width: 90%;
         max-width: 412px;
@@ -39,7 +39,8 @@
     
     .picture {
         position: relative;
-        width: 300px;
+        width: 250px;
+        height: 300px;
         top: -50px;
         left: 0px;
         border-radius: 15px;
@@ -48,7 +49,7 @@
     .currentScore {
         display: inline;
         position: relative;
-        top: -50px;
+        top: -100px;
         left: 110px;
     }
 
@@ -141,19 +142,50 @@
     
     }
     
-    
-    .checkSign {
+    .checkSignA {
         position: relative;
-        top: -220px;
-        left: 70px;
+        top: -145px;
+        left: -18px;
         display: flex;
         
     }
     
-    .xSign {
+    .xSignA {
         position: relative;
-        top: -340px;
-        left: 85px;
+        top: -210px;
+        left: -15px;
+        display: flex;
+        
+    }
+    
+    .checkSignB {
+        position: relative;
+        top: -270px;
+        left: 165px;
+        display: flex;
+        
+    }
+    
+    .xSignB {
+        position: relative;
+        top: -335px;
+        left: 165px;
+        display: flex;
+        
+    }
+    
+    .checkSignC {
+        position: relative;
+        top: -395px;
+        left: 350px;
+        display: flex;
+        
+    }
+    
+    .xSignC {
+        position: relative;
+        top: -460px;
+        left: 355px;
         display: flex;
         
     }
@@ -206,6 +238,13 @@
 
     }
     
-    
+    .signature{
+        position: absolute;
+        left: 0px;
+        top: -3px;
+        font-style: italic;
+        color: #021d49;
+    }
+       
     
     }
