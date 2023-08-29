@@ -1,5 +1,5 @@
-@media (max-width:412x) {
-
+/* @media (max-width:480x) {
+ */
 
     *{
         margin: 0;
@@ -7,70 +7,69 @@
         font-family: "Poppins", sans-serif;
         box-sizing: border-box;
     }
-    
-    
+
+
     body {
         text-align: center;
         background: #5989d6;
            }
-    
+
     .border_start{
-    
+
         background: #fff;
-        text-align: center;
         width: 90%;
-        max-width: 300px;
-        max-height: 200px;
+        max-width: 400px;
+        max-height: 175px;
         margin: 25px auto 0;
         border-radius: 30px;
         }
-    
+
     .border{
-        text-align: center;
+
         background: #fff;
         width: 90%;
-        max-width: 412px;
+        max-width: 400px;
         max-height: 1000px;
         margin: 25px auto 0;
         border-radius: 30px;
     }
-    
-    
-    
+
+
+
     .picture {
         position: relative;
-        width: 250px;
-        height: 300px;
         top: -50px;
         left: 0px;
         border-radius: 15px;
+        height: 300px;
+        width: 300px;
+
     }
-    
+
     .currentScore {
         display: inline;
         position: relative;
-        top: -100px;
-        left: 110px;
+        top: -50px;
+        left: 100px;
     }
 
-    
     .answerButtons {
         position: relative;
         top: -20px;
         left: 0px;
     }
-    
-     
-    .quiz_pictureHidden, .formHidden, .tryagainHidden, .startHidden, .timerHidden, .currentScoreHidden, .answerButtonsHidden, 
+
+
+    .quiz_pictureHidden, .formHidden, .tryagainHidden, .startHidden, .timerHidden, .currentScoreHidden, .answerButtonsHidden,
     .nextButtonHidden, .checkSignHidden, .xSignHidden{
-            visibility: hidden;    
+            visibility: hidden;
         }
-    
+
     #title{
         padding-top: 15px;
-       
+
     }
-    
+
     .answerBtn {
         background: #fff;
         color: #222;
@@ -82,27 +81,27 @@
         text-align: center;
         border-radius: 4px;
         cursor: pointer;
-       
+
     }
-    
+
     /* .answerBtn:hover{
         background: #222;
         color: #fff;
-    
+
     } */
-    
+
     .turnRedWrongAnswer {
         background: #ee4e4e;
         pointer-events: none;
-        
+
     }
-    
+
     .turnGreenCorrectAnswer {
         background: #25ee89;
         pointer-events: none;
-      
+
     }
-    
+
     .turnPale {
         background: #fff;
         color: #b3b2b2;
@@ -114,20 +113,20 @@
         text-align: center;
         border-radius: 4px;
         pointer-events: none;
-      
+
     }
-    
+
     .nextButton {
         position: relative;
         top: -25px;
         left: 0px;
 
     }
-    
+
     .nextButtonDisabled {
         pointer-events: none;
     }
-       
+
     .nextButton, #start{
         background: #001e4d;
         color: #fff;
@@ -139,71 +138,72 @@
         margin: 20px auto 0;
         border-radius: 4px;
         cursor: pointer;
-    
+
     }
-    
+
+
     .checkSignA {
         position: relative;
         top: -145px;
         left: -18px;
         display: flex;
-        
+
     }
-    
+
     .xSignA {
         position: relative;
         top: -210px;
         left: -15px;
         display: flex;
-        
+
     }
-    
+
     .checkSignB {
         position: relative;
         top: -270px;
         left: 165px;
         display: flex;
-        
+
     }
-    
+
     .xSignB {
         position: relative;
         top: -335px;
-        left: 165px;
+        left: 95px;
         display: flex;
-        
+
     }
-    
+
     .checkSignC {
         position: relative;
         top: -395px;
-        left: 350px;
+        left: 205px;
         display: flex;
-        
+
     }
-    
+
     .xSignC {
         position: relative;
         top: -460px;
         left: 355px;
         display: flex;
-        
+
     }
-       
-    
-    /* timer styles */
-    
+
+    /* timer style */
+
+
     .timer {
         position: relative;
         top: 10px;
-        left: 50px;
+        left: 60px;
         display: flex;
         height: 50px;
     }
-    
+
     #countDown{
         width: 40px;
-        
+
         position: relative;
         top: -170px;
         left: -16px;
@@ -212,32 +212,31 @@
         font-size:xx-large;
         color: #001e4d;;
     }
-    
+
     .timer, .circle, .svg {
         fill: transparent;
         stroke-width: 10px;
         stroke: #001e4d;
         transform: translate(3px, 3px);
     }
-    
+
     .timer, .circle, .svg:nth-child(2) {
         stroke: var(--clr);
         stroke-dasharray: 440;
         stroke-dashoffset: 298;
         animation: dash 30s linear;
     }
-    
-    
+
+
     @keyframes dash {
         from {stroke-dashoffset: 298;}
         to {stroke-dashoffset: 440;}
     }
-    
+
     .stoppedAnimation {
     animation: none;
-
     }
-    
+
     .signature{
         position: absolute;
         left: 0px;
@@ -245,6 +244,6 @@
         font-style: italic;
         color: #021d49;
     }
-       
-    
-    }
+
+/* 
+    } */
