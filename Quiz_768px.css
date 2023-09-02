@@ -17,7 +17,6 @@ body {
 .border_start{
 
     background: #fff;
-    /* width: 90%; */
     position: relative;
     left: -70px;
     max-width: 600px;
@@ -26,10 +25,15 @@ body {
     border-radius: 30px;
     }
 
+    .quiztitle{
+        font-size: 180%;
+        padding-top: 15px;
+    }
+
+
 .border{
 
     background: #fff;
-    /* width: 90%; */
     position: relative;
     left: -70px;
     max-width: 600px;
@@ -68,10 +72,6 @@ body {
         visibility: hidden;    
     }
 
-#title{
-    padding-top: 15px;
-   
-}
 
 .answerBtn {
     background: #fff;
@@ -228,6 +228,7 @@ body {
     stroke-dasharray: 440;
     stroke-dashoffset: 298;
     animation: dash 30s linear;
+    /* stroke animation is independent of setTime */
 }
 
 

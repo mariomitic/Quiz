@@ -1,4 +1,4 @@
-@media (min-width: 768px){
+@media (min-width: 769px){
 
 *{
     margin: 0;
@@ -22,6 +22,11 @@ body {
     margin: 25px auto 0;
     border-radius: 30px;
     }
+
+.quiztitle{
+    font-size: 180%;
+    padding-top: 15px;   
+}
 
 .border{
 
@@ -63,10 +68,6 @@ body {
         visibility: hidden;    
     }
 
-#title{
-    padding-top: 15px;
-   
-}
 
 .answerBtn {
     background: #fff;
@@ -222,7 +223,8 @@ body {
     stroke: var(--clr);
     stroke-dasharray: 440;
     stroke-dashoffset: 298;
-    animation: dash 30s linear;
+    animation: dash 30s linear; 
+    /* stroke animation is independent of setTime */
 }
 
 
